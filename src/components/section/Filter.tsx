@@ -132,17 +132,24 @@ const resumeData = [
 export default function Filter() {
     const [job, setJob] = useState("")
     const [resumes, setResumes] = useState<FilteredResume[]>([])
+    const [loading,setLoading]=useState(false);
 
     const getResumes = async () => {
+        setLoading(true)
         if (job) {
             const resumes = await getFilteredResume(job);
             if (resumes !== null) {
                 setResumes(resumes)
+                setLoading(false)
+            }
+            else{
+                setLoading(false)
             }
         }
     }
 
     const uploadFile=async(e:any)=>{
+        setLoading(true)
         const image=e.target.files[0];
         const file=new FormData()
 
@@ -156,6 +163,7 @@ export default function Filter() {
         else{
             toast.error("Can not upload resume")
         }
+        setLoading(false)
     }
 
     
@@ -187,8 +195,8 @@ export default function Filter() {
 
                         <textarea id="message" rows={15} value={job} onChange={e => setJob(e.target.value)} className="block p-2.5 w-full text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your job description here..."></textarea>
                         <div className='w-full'>
-                            <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right" onClick={getResumes}>
-                                Find Resumes
+                            <button disabled={loading} className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right" onClick={getResumes}>
+                                {loading?"Please wait.....":"Find Resumes"}
                             </button>
                         </div>
                     </div>
