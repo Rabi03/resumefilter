@@ -201,8 +201,8 @@ export default function Filter() {
                             <h1 className='text-black font-bold text-2xl my-2'>{resumes.length > 0 ? resumes.length + " Results found" : "No match found"}</h1>
                         </div>
                         <Carousel responsive={responsive} className='w-[80%] mx-auto'>
-                            {resumes.map((resume: FilteredResume) => (
-                                <Link href={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + resume.file.replace("public", "").replace("\\", "/")} target='_blank' className='relative'>
+                            {resumes.map((resume: FilteredResume,index:number) => (
+                                <Link key={index} href={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + resume.file.replace("public", "").replace("\\", "/")} target='_blank' className='relative'>
                                     <Document className="border-2 rounded-lg overflow-hidden my-2 object-contain" file={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + resume.file.replace("public", "").replace("\\", "/")}>
                                         <Page height={800} pageIndex={0} renderTextLayer={false} renderAnnotationLayer={false} />
                                     </Document>
